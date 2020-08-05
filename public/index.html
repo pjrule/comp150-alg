@@ -1,0 +1,175 @@
+<!doctype html>
+
+<head>
+  <title>Approximate Graph Coloring | Parker J. Rule</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style id="distill-article-specific-styles">
+    .subgrid {
+  grid-column: screen; 
+  display: grid; 
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
+  grid-column-gap: inherit;
+  grid-row-gap: inherit;
+}
+
+d-figure.base-grid {
+  grid-column: screen;
+  background: hsl(0, 0%, 97%);
+  padding: 20px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+d-figure {
+  margin-bottom: 1em;
+  position: relative;
+}
+
+d-figure > figure {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.shaded-figure {
+  background-color: hsl(0, 0%, 97%);
+  border-top: 1px solid hsla(0, 0%, 0%, 0.1);
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);
+  padding: 30px 0;
+}
+
+.pointer {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 26px;
+  left: -48px;
+}
+
+  </style>
+  <script src="https://distill.pub/template.v2.js"></script>
+</head>
+
+<body>
+
+  <d-front-matter>
+    <script type="text/json">
+      {
+    "title": "Approximate Graph Coloring",
+    "description": "Coloring a graph's vertices with a minimal number of colors is a classic NP-hard problem, but  there are many useful polynomial-time approximations.",
+    "authors": [
+        {
+            "author": "Parker J. Rule",
+            "authorURL": "https://pjrule.github.io/",
+            "affiliation": "Tufts University",
+            "affiliationURL": "https://eecs.tufts.edu/"
+        }
+    ],
+    "published": "August 7, 2020",
+    "katex": {
+        "delimiters": [
+            {
+                "left": "$",
+                "right": "$",
+                "display": false
+            },
+            {
+                "left": "$$",
+                "right": "$$",
+                "display": true
+            }
+        ]
+    }
+}
+    </script>
+  </d-front-matter>
+
+  <d-title>
+      <h1>Approximate Graph Coloring</h1>
+      <p>Coloring a graph's vertices with a minimal number of colors is a classic NP-hard problem, but  there are many useful polynomial-time approximations.</p>
+  </d-title>
+
+  <d-article>
+    <a class="marker" href="#section-1" id="section-1"><span>1</span></a>
+    <h2>Motivation</h2>
+    <h3>What is vertex coloring?</h3>
+    <p>A graph is <d-math>k</d-math>-colorable if each of its vertices can be assigned a color, chosen from at most <d-math>k</d-math> unique colors, such that no two vertices connected directly by an edge share the same color. The <em>chromatic number</em> of a graph is the minimum possible <d-math>k</d-math> for which a valid coloring is possible.</p>
+    <figure class="l-body-outset">
+        <div style="width:20%; display: inline-block"></div>
+        <div style="width:30%; display: inline-block">
+            <svg version="1.1" viewBox="0 0 237.6 231.84" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"> *{stroke-linecap:butt;stroke-linejoin:round;} </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 231.84 L 237.6 231.84 L 237.6 0 L 0 0 z " style="fill:#ffffff;"></path></g><g id="axes_1"><g id="LineCollection_1"><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 180.065911 36.659387 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 89.762868 17.083636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 17.345455 71.933672 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 17.345455 159.906322 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 89.762862 214.756364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 220.254545 115.92 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 180.065911 36.659387 L 89.762868 17.083636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 180.065911 36.659387 L 17.345455 71.933672 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 180.065911 36.659387 L 17.345455 159.906322 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 180.065911 36.659387 L 89.762862 214.756364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 180.065911 36.659387 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 89.762868 17.083636 L 17.345455 71.933672 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 89.762868 17.083636 L 17.345455 159.906322 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 89.762868 17.083636 L 89.762862 214.756364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 89.762868 17.083636 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 17.345455 71.933672 L 17.345455 159.906322 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 17.345455 71.933672 L 89.762862 214.756364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 17.345455 71.933672 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 17.345455 159.906322 L 89.762862 214.756364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 17.345455 159.906322 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p42606fe418)" d="M 89.762862 214.756364 L 180.065892 195.180625 " style="fill:none;stroke:#000000;"></path></g><g id="PathCollection_1"><defs><path d="M 0 8.660254 C 2.296726 8.660254 4.499694 7.747755 6.123724 6.123724 C 7.747755 4.499694 8.660254 2.296726 8.660254 0 C 8.660254 -2.296726 7.747755 -4.499694 6.123724 -6.123724 C 4.499694 -7.747755 2.296726 -8.660254 0 -8.660254 C -2.296726 -8.660254 -4.499694 -7.747755 -6.123724 -6.123724 C -7.747755 -4.499694 -8.660254 -2.296726 -8.660254 0 C -8.660254 2.296726 -7.747755 4.499694 -6.123724 6.123724 C -4.499694 7.747755 -2.296726 8.660254 0 8.660254 z " id="C0_0_fe5ef41278"></path></defs><g clip-path="url(#p42606fe418)"><use style="fill:#66c2a5;stroke:#66c2a5;" x="220.254545" xlink:href="#C0_0_fe5ef41278" y="115.92"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#fc8d62;stroke:#fc8d62;" x="180.065911" xlink:href="#C0_0_fe5ef41278" y="36.659387"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#8da0cb;stroke:#8da0cb;" x="89.762868" xlink:href="#C0_0_fe5ef41278" y="17.083636"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#a6d854;stroke:#a6d854;" x="17.345455" xlink:href="#C0_0_fe5ef41278" y="71.933672"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#ffd92f;stroke:#ffd92f;" x="17.345455" xlink:href="#C0_0_fe5ef41278" y="159.906322"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#e5c494;stroke:#e5c494;" x="89.762862" xlink:href="#C0_0_fe5ef41278" y="214.756364"></use></g><g clip-path="url(#p42606fe418)"><use style="fill:#b3b3b3;stroke:#b3b3b3;" x="180.065892" xlink:href="#C0_0_fe5ef41278" y="195.180625"></use></g></g></g></g><defs><clipPath id="p42606fe418"><rect height="217.44" width="223.2" x="7.2" y="7.2"></rect></clipPath></defs></svg>
+        </div>
+        <div style="width:30%; display: inline-block">
+            <svg version="1.1" viewBox="0 0 237.6 215.532" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"> *{stroke-linecap:butt;stroke-linejoin:round;} </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 215.532 L 237.6 215.532 L 237.6 0 L 0 0 z " style="fill:#ffffff;"></path></g><g id="axes_1"><g id="LineCollection_1"><path clip-path="url(#p8153c37a86)" d="M 118.8 16.342364 L 51.163636 107.766 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 118.8 16.342364 L 186.436364 107.766 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 51.163636 107.766 L 84.981818 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 51.163636 107.766 L 17.345455 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 186.436364 107.766 L 152.618182 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 186.436364 107.766 L 220.254545 199.189636 " style="fill:none;stroke:#000000;"></path></g><g id="PathCollection_1"><defs><path d="M 0 8.660254 C 2.296726 8.660254 4.499694 7.747755 6.123724 6.123724 C 7.747755 4.499694 8.660254 2.296726 8.660254 0 C 8.660254 -2.296726 7.747755 -4.499694 6.123724 -6.123724 C 4.499694 -7.747755 2.296726 -8.660254 0 -8.660254 C -2.296726 -8.660254 -4.499694 -7.747755 -6.123724 -6.123724 C -7.747755 -4.499694 -8.660254 -2.296726 -8.660254 0 C -8.660254 2.296726 -7.747755 4.499694 -6.123724 6.123724 C -4.499694 7.747755 -2.296726 8.660254 0 8.660254 z " id="C0_0_5278aa44d5"></path></defs><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="118.8" xlink:href="#C0_0_5278aa44d5" y="16.342364"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#d62728;stroke:#d62728;" x="51.163636" xlink:href="#C0_0_5278aa44d5" y="107.766"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#d62728;stroke:#d62728;" x="186.436364" xlink:href="#C0_0_5278aa44d5" y="107.766"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="84.981818" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="17.345455" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="152.618182" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="220.254545" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g></g></g></g><defs><clipPath id="p8153c37a86"><rect height="201.132" width="223.2" x="7.2" y="7.2"></rect></clipPath></defs></svg>
+        </div>
+    </figure>
+    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A complete graph with 7 nodes (left) requires 7 colors; a tree with 7 nodes (right) requires only 2 colors.</figcaption>
+
+    <p>Determining the chromatic number of an arbitrary graph is one of Karp's 21 NP-complete problems; a polynomial-time algorithm would imply <strong>P</strong> = <strong>NP</strong>, which is considered unlikely.<d-cite key="karp"></d-cite></p>
+
+    <p>Besides its fundamental theoretical importance, minimum vertex coloring has numerous practical applications. In the <em>examination scheduling problem</em>, exams at a university must be scheduled such the number of exam periods is minimized and no student has two exams at once. This can be modeled as a vertex coloring problem: represent each course as a vertex, and add edges between courses that share students. A vertex coloring of this graph maps each course to an exam period; if two courses share students, they must have a different color and therefore must have examinations at different times.<d-cite key="leighton"></d-cite> Vertex coloring also arises in the study of compilers, where it is used to model the register allocation problem.<d-cite key="chaitin"></d-cite></p>
+
+    <h3>Easier problems</h3>
+    <p>There are many bounds, approximation algorithms, and heuristics for vertex coloring. All planar graphs have a chromatic number of at most 4 and can be 5-colored in polynomial time. Nontrivial trees and bipartite graphs have a chromatic number of 2 and can be easily colored; cycles have a chromatic number of at most 3 and are also easy to color. More generally, it is well-known that <d-math>\chi(G) \leq \Delta(G) + 1</d-math>, where <d-math>\chi(G)</d-math> is the chromatic number of a graph <d-math>G</d-math> and <d-math>\Delta(G)</d-math> is the <em>maximum degree</em> of all the vertices of <d-math>G</d-math>. Such a coloring can be attained in polynomial time.<d-cite key="aloupis"></d-cite></p>
+
+    <p>In this project, we investigate approximate vertex coloring algorithms for graphs where there is a large gap between the trivial <d-math>\Delta(G) + 1</d-math>-coloring and the best attainable coloring. We focus specifically on 3-colorable graphs with high maximum degree. We investigate heuristics for vertex coloring, show where they fail, and describe Wigderson's vertex coloring algorithm for 3-colorable graphs that offers provably better worst-case performance than prior-known heuristics. We conclude with a survey of improvements made since the publication of Wigderson's 1983 paper.</p>
+    <figure class="l-body-outset">
+        <div style="width: 31%; display: inline-block"></div>
+        <div style="width:35%; display: inline-block">
+            <svg version="1.1" viewBox="0 0 237.6 215.532" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"> *{stroke-linecap:butt;stroke-linejoin:round;} </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 215.532 L 237.6 215.532 L 237.6 0 L 0 0 z " style="fill:#ffffff;"></path></g><g id="axes_1"><g id="LineCollection_1"><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 218.037523 88.653255 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 211.483336 70.375831 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 200.878452 53.732536 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 186.686337 39.450757 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 169.52727 28.154687 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 150.151177 20.338015 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 129.404883 16.342364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 108.195107 16.342364 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 87.448817 20.33802 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 68.072721 28.154692 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 50.913651 39.450768 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 36.721548 53.732536 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 26.116658 70.375836 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 19.562477 88.653263 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 17.345455 107.766007 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 19.562483 126.878753 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 26.116664 145.156178 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 36.721554 161.79947 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 50.913669 176.081243 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 68.072736 187.377313 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 87.448808 195.19398 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 108.195125 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 129.404877 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 150.151192 195.19398 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 169.527264 187.377313 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 186.686355 176.081227 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 200.878446 161.79947 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 211.483348 145.156156 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#pa1d91412a8)" d="M 220.254545 107.765999 L 218.037517 126.87875 " style="fill:none;stroke:#000000;"></path></g><g id="PathCollection_1"><defs><path d="M 0 6.123724 C 1.624031 6.123724 3.181764 5.47849 4.330127 4.330127 C 5.47849 3.181764 6.123724 1.624031 6.123724 0 C 6.123724 -1.624031 5.47849 -3.181764 4.330127 -4.330127 C 3.181764 -5.47849 1.624031 -6.123724 0 -6.123724 C -1.624031 -6.123724 -3.181764 -5.47849 -4.330127 -4.330127 C -5.47849 -3.181764 -6.123724 -1.624031 -6.123724 0 C -6.123724 1.624031 -5.47849 3.181764 -4.330127 4.330127 C -3.181764 5.47849 -1.624031 6.123724 0 6.123724 z " id="C0_0_174908300f"></path></defs><g clip-path="url(#pa1d91412a8)"><use style="fill:#d62728;stroke:#d62728;" x="220.254545" xlink:href="#C0_0_174908300f" y="107.765999"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="218.037523" xlink:href="#C0_0_174908300f" y="88.653255"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="211.483336" xlink:href="#C0_0_174908300f" y="70.375831"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="200.878452" xlink:href="#C0_0_174908300f" y="53.732536"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="186.686337" xlink:href="#C0_0_174908300f" y="39.450757"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="169.52727" xlink:href="#C0_0_174908300f" y="28.154687"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="150.151177" xlink:href="#C0_0_174908300f" y="20.338015"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="129.404883" xlink:href="#C0_0_174908300f" y="16.342364"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="108.195107" xlink:href="#C0_0_174908300f" y="16.342364"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="87.448817" xlink:href="#C0_0_174908300f" y="20.33802"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="68.072721" xlink:href="#C0_0_174908300f" y="28.154692"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="50.913651" xlink:href="#C0_0_174908300f" y="39.450768"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="36.721548" xlink:href="#C0_0_174908300f" y="53.732536"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="26.116658" xlink:href="#C0_0_174908300f" y="70.375836"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="19.562477" xlink:href="#C0_0_174908300f" y="88.653263"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="17.345455" xlink:href="#C0_0_174908300f" y="107.766007"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="19.562483" xlink:href="#C0_0_174908300f" y="126.878753"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="26.116664" xlink:href="#C0_0_174908300f" y="145.156178"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="36.721554" xlink:href="#C0_0_174908300f" y="161.79947"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="50.913669" xlink:href="#C0_0_174908300f" y="176.081243"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="68.072736" xlink:href="#C0_0_174908300f" y="187.377313"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="87.448808" xlink:href="#C0_0_174908300f" y="195.19398"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="108.195125" xlink:href="#C0_0_174908300f" y="199.189636"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="129.404877" xlink:href="#C0_0_174908300f" y="199.189636"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="150.151192" xlink:href="#C0_0_174908300f" y="195.19398"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="169.527264" xlink:href="#C0_0_174908300f" y="187.377313"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="186.686355" xlink:href="#C0_0_174908300f" y="176.081227"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="200.878446" xlink:href="#C0_0_174908300f" y="161.79947"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="211.483348" xlink:href="#C0_0_174908300f" y="145.156156"></use></g><g clip-path="url(#pa1d91412a8)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="218.037517" xlink:href="#C0_0_174908300f" y="126.87875"></use></g></g></g></g><defs><clipPath id="pa1d91412a8"><rect height="201.132" width="223.2" x="7.2" y="7.2"></rect></clipPath></defs></svg>
+        </div>
+    </figure>
+    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A 2-colorable graph with a maximum degree of 29.</figcaption>
+
+
+    <a class="marker" href="#section-3" id="section-3"><span>3</span></a>
+    <h2>Heuristics</h2>
+    <h3>Randomly ordered greedy coloring</h3>
+    <p>Perhaps the simplest graph coloring heuristic is the following: choose an uncolored vertex at random and assign it a color not used by its neighbors, introducing a new color if the vertex's neighbors are using all previously available colors. Repeat this operation until all vertices are colored.</p>
+
+    <h3>Largest-degree-first coloring</h3>
+
+    <h3>Brélaz's algorithm (DSatur)</h3>
+    <p>Brélaz's widely used degree saturation (DSatur) algorithm often performs better than random coloring.<d-footnote>The original Brélaz paper does not provide comprehensive benchmarks against the random coloring algorithm; instead, benchmarks against other heuristics, which were presumably all invented as improvements over naive greedy coloring, are provided. Some cursory benchmarking on small Erdős–Rényi random graphs suggests that Brélaz's algorithm almost always performs better than random coloring.</d-footnote>A vertex's <em>degree saturation</em> is the number of unique colors used by its neighbors.<d-cite key="brelaz"></d-cite></p>
+
+    <h3>Worst-case behavior</h3>
+    <figure style="margin: 0 auto">
+    <video width="600" height="200" autoplay loop>
+      <source type="video/mp4" src="/diagrams/spinrad_10.mp4">
+      Your browser does not support the video tag.
+    </video>
+    </figure>
+    <figcaption style="margin: 1em auto">Spinrad and Vijayan construct a class of 3-colorable graphs that Brélaz's algorithm may color with <d-math>O(n)</d-math> colors.<d-cite key="spinrad"></d-cite></figcaption>
+
+    <p>While these heuristics are useful in practice, they yield no worst-case asymptotic improvement over simply assigning each vertex its own color. Johnson constructs examples for random coloring and largest-degree-first coloring that use <d-math>O(n)</d-math> colors for a 3-colorable graph.<d-cite key="leighton,johnson-approx,johnson-worst-case"></d-cite> Brélaz's algorithm can fail similarly, as shown above.<d-cite key="spinrad"></d-cite> Garey and Johnson show that no polynomial-time vertex coloring algorithm exists with an approximation factor beter than 2.<d-cite key="garey"></d-cite></p>
+
+    <a class="marker" href="#section-4" id="section-4"><span>4</span></a>
+    <h2>Wigderson's 3-coloring approximation</h2>
+    <p>Outline:</p>
+    <ol>
+        <li>1-2 paragraphs: Main concepts for Algorithm A of <d-cite key="wigderson"></d-cite>.</li>
+        <li>2-4 paragraphs: detailed discussion of proof (with notes on runtime)</li>
+        <li>1 paragraph: discussion of interactive</li>
+        <li>Interactive: select from pre-selected 3-colorable graphs with high maximum degree and "very hard" 3-colorable graphs generated using techniques from <d-cite key="mizuno"></d-cite>. Show coloring process step by step.</li>
+        <li>1-2 paragraphs: discussion of performance guarantees vs. real-life performance against heuristics</li>
+    </ol>
+
+    <a class="marker" href="#section-5" id="section-5"><span>5</span></a>
+    <h2>Other algorithms</h2>
+    <h3>Wigderson's <d-math>k</d-math>-coloring approximation</h3>
+    <h3>Blum's approximation</h3>
+    <h3>Semidefinite programming</h3>
+
+    <a class="marker" href="#section-6" id="section-6"><span>6</span></a>
+    <h2>Conclusion</h2>
+  </d-article>
+
+  <d-appendix>
+    <d-footnote-list></d-footnote-list>
+    <d-citation-list></d-citation-list>
+  </d-appendix>
+
+  <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
+  <d-bibliography src="bibliography.bib"></d-bibliography>
+<script type="text/javascript" src="index.bundle.js"></script></body>

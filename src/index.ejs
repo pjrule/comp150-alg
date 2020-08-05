@@ -1,6 +1,7 @@
 <!doctype html>
 
 <head>
+  <title>Approximate Graph Coloring | Parker J. Rule</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style id="distill-article-specific-styles">
@@ -18,322 +19,90 @@
   </d-front-matter>
 
   <d-title>
-    <h1>Distill Example</h1>
-    <p>An example project using Webpack, Babel, and Svelte. </p>
+      <h1>Approximate Graph Coloring</h1>
+      <p>Coloring a graph's vertices with a minimal number of colors is a classic NP-hard problem, but  there are many useful polynomial-time approximations.</p>
   </d-title>
 
   <d-article>
-
-    <p>
-      Welcome to a Distill example article: meant to get you writing up your research quickly. Let's demo some
-      features:
-    </p>
-
-    <h4>Hot reloading</h4>
-    <p>Your browser can automatically refresh when your editor saves. This should work by default, and you can disable
-      it in <code>index.js</code>. Sometimes hot reloading isn't fully compatible with all types of code, so you may
-      need to try manually reloading if you're seeing inconsistent behavior.</p>
-
-    <h4>Inlined SVGs</h4>
-    <p>SVGs are so small that it can be nice to save an extra request and simply inline them intop your HTML:</p>
-
-    <figure>
-      <%= require("../static/diagrams/diffparam.svg") %>
+    <a class="marker" href="#section-1" id="section-1"><span>1</span></a>
+    <h2>Motivation</h2>
+    <h3>What is vertex coloring?</h3>
+    <p>A graph is <d-math>k</d-math>-colorable if each of its vertices can be assigned a color, chosen from at most <d-math>k</d-math> unique colors, such that no two vertices connected directly by an edge share the same color. The <em>chromatic number</em> of a graph is the minimum possible <d-math>k</d-math> for which a valid coloring is possible.</p>
+    <figure class="l-body-outset">
+        <div style="width:20%; display: inline-block"></div>
+        <div style="width:30%; display: inline-block">
+            <%= require("../static/diagrams/complete_7.svg") %>
+        </div>
+        <div style="width:30%; display: inline-block">
+            <%= require("../static/diagrams/tree_7.svg") %>
+        </div>
     </figure>
+    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A complete graph with 7 nodes (left) requires 7 colors; a tree with 7 nodes (right) requires only 2 colors.</figcaption>
 
-    <style>
-      #arrow-2 #arrow-head {
-        fill: steelblue;
-      }
+    <p>Determining the chromatic number of an arbitrary graph is one of Karp's 21 NP-complete problems; a polynomial-time algorithm would imply <strong>P</strong> = <strong>NP</strong>, which is considered unlikely.<d-cite key="karp"></d-cite></p>
 
-      #arrow-2 #arrow-line {
-        stroke: steelblue;
-      }
-    </style>
+    <p>Besides its fundamental theoretical importance, minimum vertex coloring has numerous practical applications. In the <em>examination scheduling problem</em>, exams at a university must be scheduled such the number of exam periods is minimized and no student has two exams at once. This can be modeled as a vertex coloring problem: represent each course as a vertex, and add edges between courses that share students. A vertex coloring of this graph maps each course to an exam period; if two courses share students, they must have a different color and therefore must have examinations at different times.<d-cite key="leighton"></d-cite> Vertex coloring also arises in the study of compilers, where it is used to model the register allocation problem.<d-cite key="chaitin"></d-cite></p>
 
-    <p>Let's use some CSS to style an inlined SVG. Here's an arrow
-      <svg width="27px" height="9px" viewBox="0 0 27 9" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Group" transform="translate(-0.195652, 0.0)">
-            <path d="M10.5,4.5 L26.8913043,4.5" id="arrow-line" stroke="#FF6600" stroke-width="2"
-              stroke-linecap="square" stroke-dasharray="6,4"></path>
-            <g id="arrow-head" transform="translate(5.0, 4.5) scale(-1, 1) translate(-5.0, -4.5) translate(0.5, 0.0)"
-              fill="#FF6600" fill-rule="nonzero">
-              <path
-                d="M4.5,0 C5.67007294,3.25202425 6.85281213,6.29180565 9,9 L4.5,7.3125 L0,9 C2.13530145,6.28972675 3.34126793,3.24998975 4.5,0 Z"
-                id="Shape" transform="translate(4.5, 4.5) rotate(-270.0) translate(-4.5, -4.5) "></path>
-            </g>
-          </g>
-        </g>
-      </svg> that we
-      can make
-      inline. If you'd like to change the color in CSS, we can do so. Let's put the second arrow (<span
-        id="arrow-2"><svg width="27px" height="9px" viewBox="0 0 27 9" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="Group" transform="translate(-0.195652, 0.0)">
-              <path d="M10.5,4.5 L26.8913043,4.5" id="arrow-line" stroke="#FF6600" stroke-width="2"
-                stroke-linecap="square" stroke-dasharray="6,4"></path>
-              <g id="arrow-head" transform="translate(5.0, 4.5) scale(-1, 1) translate(-5.0, -4.5) translate(0.5, 0.0)"
-                fill="#FF6600" fill-rule="nonzero">
-                <path
-                  d="M4.5,0 C5.67007294,3.25202425 6.85281213,6.29180565 9,9 L4.5,7.3125 L0,9 C2.13530145,6.28972675 3.34126793,3.24998975 4.5,0 Z"
-                  id="Shape" transform="translate(4.5, 4.5) rotate(-270.0) translate(-4.5, -4.5) "></path>
-              </g>
-            </g>
-          </g>
-        </svg></span>) in a tag with an ID, so we can
-      target it in CSS.
+    <h3>Easier problems</h3>
+    <p>There are many bounds, approximation algorithms, and heuristics for vertex coloring. All planar graphs have a chromatic number of at most 4 and can be 5-colored in polynomial time. Nontrivial trees and bipartite graphs have a chromatic number of 2 and can be easily colored; cycles have a chromatic number of at most 3 and are also easy to color. More generally, it is well-known that <d-math>\chi(G) \leq \Delta(G) + 1</d-math>, where <d-math>\chi(G)</d-math> is the chromatic number of a graph <d-math>G</d-math> and <d-math>\Delta(G)</d-math> is the <em>maximum degree</em> of all the vertices of <d-math>G</d-math>. Such a coloring can be attained in polynomial time.<d-cite key="aloupis"></d-cite></p>
 
-      <d-code block="" language="css">
-        #arrow-2 #arrow-head {
-        fill: steelblue;
-        }
-
-        #arrow-2 #arrow-line {
-        stroke: steelblue;
-        }
-      </d-code>
-
-    </p>
-
-    <h4>Formulas</h4>
-
-    <p>Here's a test of an inline equation <d-math>c = a^2 + b^2</d-math>. Can also be used with configurable katex
-      settings, for example by
-      using inline <code>$</code> signs: <d-math>x^2</d-math>. There are also block equations:</p>
-    <d-math block="">
-      c = \pm \sqrt{ \sum_{i=0}^{n}{a^{222} + b^2}}
-    </d-math>
-    <p>Math can also be quite involved:</p>
-    <d-math block="">
-      \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}}
-      {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
-    </d-math>
-
-    <p>We've also been experimenting with <a
-        href="https://github.com/distillpub/template/wiki/Annotated-Formulas">annotated formulas</a>:</p>
-
-    <style>
-      .eq-grid {
-        display: grid;
-        justify-content: start;
-        grid-row-gap: 10px;
-      }
-
-      .eq-grid figcaption d-math {
-        font-size: 100%;
-      }
-
-      .eq-grid .expansion-marker {
-        border: 1px solid #CCC;
-        border-bottom: none;
-        height: .5em;
-        width: 100%;
-      }
-    </style>
-
-    <figure class="eq-grid">
-
-      <div style="grid-row: 1; grid-column: 1;">
-        <d-math> C ~~~=~~~~ </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 2;">
-        <d-math> H^E_D(X, Z) </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 3;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 4;">
-        <d-math> H^E_E(X, Z) </d-math>
-      </div>
-
-
-      <div class="expansion-marker" style="grid-row: 2; grid-column: 4 / 7; "></div>
-
-      <div style="grid-row: 3; grid-column: 1;">
-        <d-math> ~~~~~~~=~~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 2;">
-        <d-math> H^E_D(X, Z) </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 3;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 4;">
-        <d-math> H^E_E(Z | X) </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 5;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 6;">
-        <d-math> H^E_E(X) </d-math>
-      </div>
-
-      <figcaption style="grid-row: 4; grid-column: 4; max-width:135px;">
-        Bits to represent <d-math>z</d-math><br> if you already know <d-math>x</d-math>.
-      </figcaption>
-      <figcaption style="grid-row: 4; grid-column: 6; max-width:120px;">
-        Bits to represent<br>
-        <d-math>x</d-math> by itself.
-      </figcaption>
-
+    <p>In this project, we investigate approximate vertex coloring algorithms for graphs where there is a large gap between the trivial <d-math>\Delta(G) + 1</d-math>-coloring and the best attainable coloring. We focus specifically on 3-colorable graphs with high maximum degree. We investigate heuristics for vertex coloring, show where they fail, and describe Wigderson's vertex coloring algorithm for 3-colorable graphs that offers provably better worst-case performance than prior-known heuristics. We conclude with a survey of improvements made since the publication of Wigderson's 1983 paper.</p>
+    <figure class="l-body-outset">
+        <div style="width: 31%; display: inline-block"></div>
+        <div style="width:35%; display: inline-block">
+            <%= require("../static/diagrams/tree_high_max_deg.svg") %>
+        </div>
     </figure>
-
-    <h4>Citations</h4>
-
-    <p>We can<d-cite key="mercier2011humans"></d-cite> also cite <d-cite
-        key="gregor2015draw,mercier2011humans,openai2018charter"></d-cite> external publications. <d-cite
-        key="dong2014image,dumoulin2016guide,mordvintsev2015inceptionism"></d-cite>. We should also be testing
-      footnotes
-      <d-footnote id="d-footnote-1">This will become a hoverable footnote. This will become a hoverable footnote. This
-        will become a
-        hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote. This will
-        become a hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote.
-      </d-footnote>. There are multiple footnotes, and they appear in the appendix<d-footnote id="d-footnote-2">Given I
-        have coded them
-        right. Also, here's math in a footnote: <d-math>c = \sum_0^i{x}</d-math>. Also, a citation. Box-ception<d-cite
-          key="gregor2015draw"></d-cite>!</d-footnote> as well.</p>
+    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A 2-colorable graph with a maximum degree of 29.</figcaption>
 
 
-    <h4>Displaying code</h4>
-    <p>Some inline javascript:<d-code language="javascript">var x = 25;</d-code>. And here's a javascript code block.
-    </p>
+    <a class="marker" href="#section-3" id="section-3"><span>3</span></a>
+    <h2>Heuristics</h2>
+    <h3>Randomly ordered greedy coloring</h3>
+    <p>Perhaps the simplest graph coloring heuristic is the following: choose an uncolored vertex at random and assign it a color not used by its neighbors, introducing a new color if the vertex's neighbors are using all previously available colors. Repeat this operation until all vertices are colored.</p>
 
-    <d-code block="" language="javascript">
-      var x = 25;
-      function(x){
-      return x * x;
-      }
-    </d-code>
-    <p>We also support some highlighting.</p>
-    <d-code block="" language="python">
-      # Python 3: Fibonacci series up to n
-      def fib(n):
-      a, b = 0, 1
-      while a &lt; n: print(a, end=' ' ) a, b=b, a+b </d-code>
+    <h3>Largest-degree-first coloring</h3>
 
-    <h4>Tables</h4>
-    <p>We have simple tables that try to stay readable at most screen sizes:
-    </p>
+    <h3>Brélaz's algorithm (DSatur)</h3>
+    <p>Brélaz's widely used degree saturation (DSatur) algorithm often performs better than random coloring.<d-footnote>The original Brélaz paper does not provide comprehensive benchmarks against the random coloring algorithm; instead, benchmarks against other heuristics, which were presumably all invented as improvements over naive greedy coloring, are provided. Some cursory benchmarking on small Erdős–Rényi random graphs suggests that Brélaz's algorithm almost always performs better than random coloring.</d-footnote>A vertex's <em>degree saturation</em> is the number of unique colors used by its neighbors.<d-cite key="brelaz"></d-cite></p>
 
-    <style>
-      #example-table {
-        overflow-x: scroll;
-      }
+    <h3>Worst-case behavior</h3>
+    <figure style="margin: 0 auto">
+    <video width="600" height="200" autoplay loop>
+      <source type="video/mp4" src="/diagrams/spinrad_10.mp4">
+      Your browser does not support the video tag.
+    </video>
+    </figure>
+    <figcaption style="margin: 1em auto">Spinrad and Vijayan construct a class of 3-colorable graphs that Brélaz's algorithm may color with <d-math>O(n)</d-math> colors.<d-cite key="spinrad"></d-cite></figcaption>
 
-      #example-table th {
-        white-space: nowrap;
-      }
+    <p>While these heuristics are useful in practice, they yield no worst-case asymptotic improvement over simply assigning each vertex its own color. Johnson constructs examples for random coloring and largest-degree-first coloring that use <d-math>O(n)</d-math> colors for a 3-colorable graph.<d-cite key="leighton,johnson-approx,johnson-worst-case"></d-cite> Brélaz's algorithm can fail similarly, as shown above.<d-cite key="spinrad"></d-cite> Garey and Johnson show that no polynomial-time vertex coloring algorithm exists with an approximation factor beter than 2.<d-cite key="garey"></d-cite></p>
 
-      #example-table tbody th {
-        font-weight: initial;
-        border-bottom: 1px solid rgb(242, 242, 242);
-      }
+    <a class="marker" href="#section-4" id="section-4"><span>4</span></a>
+    <h2>Wigderson's 3-coloring approximation</h2>
+    <p>Outline:</p>
+    <ol>
+        <li>1-2 paragraphs: Main concepts for Algorithm A of <d-cite key="wigderson"></d-cite>.</li>
+        <li>2-4 paragraphs: detailed discussion of proof (with notes on runtime)</li>
+        <li>1 paragraph: discussion of interactive</li>
+        <li>Interactive: select from pre-selected 3-colorable graphs with high maximum degree and "very hard" 3-colorable graphs generated using techniques from <d-cite key="mizuno"></d-cite>. Show coloring process step by step.</li>
+        <li>1-2 paragraphs: discussion of performance guarantees vs. real-life performance against heuristics</li>
+    </ol>
 
-      #example-table tbody tr:last-of-type th {
-        border-bottom: inherit;
-      }
+    <a class="marker" href="#section-5" id="section-5"><span>5</span></a>
+    <h2>Other algorithms</h2>
+    <h3>Wigderson's <d-math>k</d-math>-coloring approximation</h3>
+    <h3>Blum's approximation</h3>
+    <h3>Semidefinite programming</h3>
 
-      #example-table td,
-      #example-table thead th {
-        text-align: center;
-      }
-
-      #example-table td {
-        border-color: rgb(242, 242, 242);
-      }
-
-      #example-table td.no {
-        background-color: #f6f6f6;
-      }
-    </style>
-    <table id="example-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Parallel</th>
-          <th scope="col">Efficient</th>
-          <th scope="col">Reversible</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">GANs</th>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td class="no">No</td>
-        </tr>
-        <tr>
-          <th scope="row">Flow Models</th>
-          <td>Yes</td>
-          <td class="no">No</td>
-          <td>Yes</td>
-        </tr>
-        <tr>
-          <th scope="row">Autoregressive Models</th>
-          <td class="no">No</td>
-          <td>Yes</td>
-          <td>Yes</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4>Interactive Figures</h4>
-
-    <p>
-      Here's a dynamically instantiated "figure". We use Intersection Observers to allow loading resource-heavy
-      figures only when readers scroll close to them. The code for this is in <code>src/index.js</code>.
-    </p>
-
-    <d-figure id="svelte-example-dfigure">
-      <figure>
-        <div id="svelte-example-target"></div>
-        <figcaption>And a static figcaption. You can use citations<d-cite key="mercier2011humans"></d-cite> in this
-          figcaption, but not in text added by javascript.</figcaption>
-      </figure>
-    </d-figure>
-
-    <p>You can't use citation tags (<code>d-cite</code>) in figures that are dynamically loaded using Javascript.
-      Distill statically
-      analyzes your submission for its citations, because they need to be uploaded to indexers and organizations like <a
-        href="https://www.crossref.org/">CrossRef</a> and <a href="https://scholar.google.com">Google Scholar</a>.</p>
-
-    <p>That's it for the example article! Feel free to look at <a
-        href="https://github.com/distillpub?utf8=%E2%9C%93&q=post--&type=public">implementations
-        of existing Distill articles</a>, or ask for help in
-      the <a href="http://slack.distill.pub">Distill Slack Community</a>.</p>
-
+    <a class="marker" href="#section-6" id="section-6"><span>6</span></a>
+    <h2>Conclusion</h2>
   </d-article>
 
-
-
   <d-appendix>
-    <h3>Acknowledgments</h3>
-    <p>
-      We are deeply grateful to...
-    </p>
-
-    <p>
-      Many of our diagrams are based on...
-    </p>
-
-    <h3>Author Contributions</h3>
-    <p>
-      <b>Research:</b> Alex developed ...
-    </p>
-
-    <p>
-      <b>Writing & Diagrams:</b> The text was initially drafted by...
-    </p>
-
-
     <d-footnote-list></d-footnote-list>
     <d-citation-list></d-citation-list>
   </d-appendix>
 
   <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
   <d-bibliography src="bibliography.bib"></d-bibliography>
-
 </body>

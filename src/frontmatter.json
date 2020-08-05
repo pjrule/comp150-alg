@@ -1,15 +1,15 @@
 {
-	"title": "Distill Example",
-	"description": "An example project using Webpack, Babel, and Svelte.",
-	"password": "svgs",
+	"title": "Approximate Graph Coloring",
+	"description": "Coloring a graph's vertices with a minimal number of colors is a classic NP-hard problem, but  there are many useful polynomial-time approximations.",
 	"authors": [
 		{
-			"author": "Ludwig Schubert",
-			"authorURL": "https://schubert.io/",
-			"affiliation": "OpenAI",
-			"affiliationURL": "https://openai.com"
+			"author": "Parker J. Rule",
+			"authorURL": "https://pjrule.github.io/",
+			"affiliation": "Tufts University",
+			"affiliationURL": "https://eecs.tufts.edu/"
 		}
 	],
+        "published": "August 7, 2020",
 	"katex": {
 		"delimiters": [
 			{
