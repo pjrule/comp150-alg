@@ -94,7 +94,7 @@ d-figure > figure {
 
   <d-title>
       <h1>Approximate Graph Coloring</h1>
-      <p>Coloring a graph's vertices with a minimal number of colors is a classic NP-hard problem, but  there are many useful polynomial-time approximations.</p>
+      <p>Coloring a graph's vertices with a minimal number of colors is a classic NP-complete problem, but there are many useful polynomial-time approximation algorithms.</p>
   </d-title>
 
   <d-article>
@@ -111,9 +111,9 @@ d-figure > figure {
             <svg version="1.1" viewBox="0 0 237.6 215.532" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"> *{stroke-linecap:butt;stroke-linejoin:round;} </style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 215.532 L 237.6 215.532 L 237.6 0 L 0 0 z " style="fill:#ffffff;"></path></g><g id="axes_1"><g id="LineCollection_1"><path clip-path="url(#p8153c37a86)" d="M 118.8 16.342364 L 51.163636 107.766 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 118.8 16.342364 L 186.436364 107.766 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 51.163636 107.766 L 84.981818 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 51.163636 107.766 L 17.345455 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 186.436364 107.766 L 152.618182 199.189636 " style="fill:none;stroke:#000000;"></path><path clip-path="url(#p8153c37a86)" d="M 186.436364 107.766 L 220.254545 199.189636 " style="fill:none;stroke:#000000;"></path></g><g id="PathCollection_1"><defs><path d="M 0 8.660254 C 2.296726 8.660254 4.499694 7.747755 6.123724 6.123724 C 7.747755 4.499694 8.660254 2.296726 8.660254 0 C 8.660254 -2.296726 7.747755 -4.499694 6.123724 -6.123724 C 4.499694 -7.747755 2.296726 -8.660254 0 -8.660254 C -2.296726 -8.660254 -4.499694 -7.747755 -6.123724 -6.123724 C -7.747755 -4.499694 -8.660254 -2.296726 -8.660254 0 C -8.660254 2.296726 -7.747755 4.499694 -6.123724 6.123724 C -4.499694 7.747755 -2.296726 8.660254 0 8.660254 z " id="C0_0_5278aa44d5"></path></defs><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="118.8" xlink:href="#C0_0_5278aa44d5" y="16.342364"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#d62728;stroke:#d62728;" x="51.163636" xlink:href="#C0_0_5278aa44d5" y="107.766"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#d62728;stroke:#d62728;" x="186.436364" xlink:href="#C0_0_5278aa44d5" y="107.766"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="84.981818" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="17.345455" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="152.618182" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g><g clip-path="url(#p8153c37a86)"><use style="fill:#1f77b4;stroke:#1f77b4;" x="220.254545" xlink:href="#C0_0_5278aa44d5" y="199.189636"></use></g></g></g></g><defs><clipPath id="p8153c37a86"><rect height="201.132" width="223.2" x="7.2" y="7.2"></rect></clipPath></defs></svg>
         </div>
     </figure>
-    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A complete graph with 7 nodes (left) requires 7 colors; a tree with 7 nodes (right) requires only 2 colors.</figcaption>
+    <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A complete graph with 7 vertices (left) requires 7 colors; a tree with 7 vertices (right) requires only 2 colors.</figcaption>
 
-    <p>Determining the chromatic number of an arbitrary graph is one of Karp's 21 NP-complete problems; a polynomial-time algorithm would imply <strong>P</strong> = <strong>NP</strong>, which is considered unlikely.<d-cite key="karp"></d-cite></p>
+    <p>Determining the chromatic number of an arbitrary graph is one of Karp's famous 21 <strong>NP</strong>-complete problems; a polynomial-time algorithm would imply <strong>P</strong> = <strong>NP</strong>, which is considered unlikely.<d-cite key="karp"></d-cite></p>
 
     <p>Besides its fundamental theoretical importance, minimum vertex coloring has numerous practical applications. In the <em>examination scheduling problem</em>, exams at a university must be scheduled such the number of exam periods is minimized and no student has two exams at once. This can be modeled as a vertex coloring problem: represent each course as a vertex, and add edges between courses that share students. A vertex coloring of this graph maps each course to an exam period; if two courses share students, they must have a different color and therefore must have examinations at different times.<d-cite key="leighton"></d-cite> Vertex coloring also arises in the study of compilers, where it is used to model the register allocation problem.<d-cite key="chaitin"></d-cite></p>
 
@@ -129,16 +129,39 @@ d-figure > figure {
     </figure>
     <figcaption style="margin-left: auto; margin-right: auto; margin-bottom: 1em">A 2-colorable graph with a maximum degree of 29.</figcaption>
 
+    <h3>Random graphs</h3>
+    <p>To generate test cases for the heuristics, we will primarily consider the <em>Erdős–Rényi random graph model</em> <d-math>G(n, p)</d-math>. This model is widely studied in the approximate graph coloring literature. To sample a graph from <d-math>G(n, p)</d-math>, we simply construct a graph with <d-math>n</d-math> vertices and then insert each of the <d-math>{n \choose 2}</d-math> unique possible edges with probability <d-math>p</d-math>. At the extremes, <d-math>G(n, 0)</d-math> contains only the graph with <d-math>n</d-math> vertices and no edges, and <d-math>G(n, 1)</d-math> only the complete graph <d-math>K_n</d-math> with all possible edges.</p>
+    <p>Despite this simple construction, Erdős–Rényi random graphs exhibit rich and surprising behavior, perhaps most notably rapid phase transitions. When <d-math>p \gt \frac{1}{n}</d-math>, a graph drawn from <d-math>G(n, p)</d-math> almost always has a "giant component" that contains the vast majority of the vertices in the graph, but when <d-math>p \lt \frac{1}{n}</d-math>, a graph drawn from <d-math>G(n, p)</d-math> usually has many small components of size <d-math>O(\log n)</d-math>.<d-cite key="spencer"></d-cite> Similarly, for sufficiently large <d-math>n</d-math>, graphs drawn from <d-math>G(n, \frac{1-\epsilon}{n})</d-math> are almost always 3-colorable, but this does not necessarily hold for graphs drawn from <d-math>G(n, \frac{1+\epsilon}{n})</d-math>.<d-cite key="diaz"></d-cite></p>
 
-    <a class="marker" href="#section-3" id="section-3"><span>3</span></a>
+    <a class="marker" href="#section-2" id="section-2"><span>2</span></a>
     <h2>Heuristics</h2>
-    <h3>Randomly ordered greedy coloring</h3>
-    <p>Perhaps the simplest graph coloring heuristic is the following: choose an uncolored vertex at random and assign it a color not used by its neighbors, introducing a new color if the vertex's neighbors are using all previously available colors. Repeat this operation until all vertices are colored.</p>
+    <h3>Simple greedy coloring</h3>
+    <p>Perhaps the simplest graph coloring heuristic is the following: choose an uncolored vertex at random and assign it a color not used by its neighbors, introducing a new color if the vertex's neighbors are using all previously available colors. Repeat this operation until all vertices are colored.<d-cite key="leighton"></d-cite></p>
 
-    <h3>Largest-degree-first coloring</h3>
+    <p>While this algorithm often performs poorly compared to other heuristics, it is a useful baseline. Grimett and McDiarmid show that this algorithm, in expectation, colors Erdős–Rényi random graphs with only twice as many colors as required.<d-cite key="grimmett"></d-cite></p>
+
+    <p>As a simple improvement to the random coloring algorithm, sort the vertices of a graph by degree and color the vertices with largest degree first. Intuitively, this algorithm handles the hardest vertices—that is, the vertices most likely to be constrained by their neighbors—first and thus avoids excessively introducing new colors in some cases.<d-cite key="leighton"></d-cite></p>
 
     <h3>Brélaz's algorithm (DSatur)</h3>
-    <p>Brélaz's widely used degree saturation (DSatur) algorithm often performs better than random coloring.<d-footnote>The original Brélaz paper does not provide comprehensive benchmarks against the random coloring algorithm; instead, benchmarks against other heuristics, which were presumably all invented as improvements over naive greedy coloring, are provided. Some cursory benchmarking on small Erdős–Rényi random graphs suggests that Brélaz's algorithm almost always performs better than random coloring.</d-footnote>A vertex's <em>degree saturation</em> is the number of unique colors used by its neighbors.<d-cite key="brelaz"></d-cite></p>
+    <p>Brélaz's widely used degree saturation (DSatur) algorithm often performs better than random coloring.<d-footnote>The original Brélaz paper does not provide comprehensive benchmarks against the random coloring algorithm; instead, benchmarks against other heuristics, which were presumably all invented as improvements over naive greedy coloring, are provided. Some cursory benchmarking on small Erdős–Rényi random graphs suggests that Brélaz's algorithm almost always performs better than random coloring.</d-footnote>A vertex's <em>degree saturation</em> is the number of unique colors used by its neighbors.<d-cite key="brelaz"></d-cite> Brélaz's algorithm can be viewed as an extension of the largest-degree-first algorithm. It simply introduces the additional intuition that, in a partially colored graph, vertices surrounded by many different colors are more likely to eventually run out of available colors, regardless of degree.</p>
+
+    <div style="width: 85%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
+        <h4>Brélaz's degree saturation algorithm</h4>
+        <p><strong>Input:</strong> a graph <d-math>G</d-math> (chromatic number unknown).</p>
+        <p><strong>Output:</strong> a coloring of <d-math>G</d-math>.</p>
+        <p><strong>Initialization:</strong> <d-math>i \leftarrow 1</d-math></p>
+        <hr style="margin: 1.5rem 0">
+        <p><strong>while</strong> <d-math>G</d-math> is partially uncolored:
+        <ol style="margin-left: 1rem">
+            <li>Choose the uncolored vertex <d-math>v \in G</d-math> with maximum saturation degree. If more than one vertex have this saturation degree, choose the vertex with maximum degree instead.</li>
+            <li>Attempt to color <d-math>v</d-math> with the minimum possible color in <d-math>[1, i]</d-math>. If this is not possible, introduce color <d-math>i + 1</d-math>.</li>
+        </ol>
+</div>
+
+
+    <div id="brelaz" style="width: 100%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
+        <h4 style="text-align: center">Brelaz here</h4>
+    </div>
 
     <h3>Worst-case behavior</h3>
     <figure style="margin: 0 auto">
@@ -149,39 +172,44 @@ d-figure > figure {
     </figure>
     <figcaption style="margin: 1em auto">Spinrad and Vijayan construct a class of 3-colorable graphs that Brélaz's algorithm may color with <d-math>O(n)</d-math> colors.<d-cite key="spinrad"></d-cite></figcaption>
 
-    <p>While these heuristics are useful in practice, they yield no worst-case asymptotic improvement over simply assigning each vertex its own color. Johnson constructs examples for random coloring and largest-degree-first coloring that use <d-math>O(n)</d-math> colors for a 3-colorable graph.<d-cite key="leighton,johnson-approx,johnson-worst-case"></d-cite> Brélaz's algorithm can fail similarly, as shown above.<d-cite key="spinrad"></d-cite> Garey and Johnson show that no polynomial-time vertex coloring algorithm exists with an approximation factor beter than 2.<d-cite key="garey"></d-cite></p>
+    <p>While these heuristics are useful in practice, they yield no worst-case asymptotic improvement over simply assigning each vertex its own color. Johnson constructs examples for random coloring and largest-degree-first coloring that use <d-math>O(n)</d-math> colors for a 3-colorable graph.<d-cite key="leighton,johnson-approx,johnson-worst-case"></d-cite> Brélaz's algorithm can fail similarly, as shown above.<d-cite key="spinrad"></d-cite> 
 
     <h3>Greedy independent set coloring</h3>
-    <p>Not all simple heuristics for vertex coloring have such poor worst-case performance. Johnson and Wigderson describe the <em>greedy independent set</em> heuristic, which can color a <d-math>k</d-math> colorable graph with <d-math>O(n \ / \log_k n)</d-math> colors.
+    <p>Not all simple heuristics for vertex coloring have such poor worst-case performance. Johnson and Wigderson describe the <em>greedy independent set</em> heuristic, which can color a <d-math>k</d-math> colorable graph with <d-math>O(n \ / \log_k n)</d-math> colors.<d-cite key="johnson-worst-case,wigderson"></d-cite></p>
 
     <div style="width: 85%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
+        <h4>Greedy independent set coloring</h4>
         <p><strong>Input:</strong> a graph <d-math>G</d-math> (chromatic number unknown).</p>
         <p><strong>Output:</strong> a coloring of <d-math>G</d-math> with at most <d-math>3\frac{n}{\log_k n}</d-math> colors.</p>
-        <p><strong>Initialization:</strong> <d-math>i \leftarrow 1, n \leftarrow |V|</d-math></p>
+        <p><strong>Initialization:</strong> <d-math>i \leftarrow 1, W \leftarrow V</d-math>, <d-math>U \leftarrow W</d-math></p>
         <hr style="margin: 1.5rem 0">
-        <p></p>
+        <p><strong>while</strong> <d-math>G</d-math> is partially uncolored (<d-math>W</d-math> is nonempty):
+        <ol style="margin-left: 1rem">
+            <li>Choose the vertex <d-math>v \in U</d-math> with minimal degree in the subgraph of <d-math>G</d-math> induced by <d-math>U</d-math>. Color <d-math>v</d-math> with <d-math>i</d-math> and remove <d-math>v</d-math> from <d-math>W</d-math>.</li>
+            <li>Remove <d-math>u</d-math> and its neighbors from <d-math>U</d-math>.</li>
+            <li>If <d-math>U</d-math> is empty, let <d-math>i \leftarrow i + 1</d-math> and <d-math>U \leftarrow W</d-math>.</li>
+        </ol>
     </div>
+
+    <p>For any proper coloring, each color corresponds to an <em>independent set</em> of vertices—by definition, no two vertices with the same color share an edge. Step 2 maintains a <em>greedy independent set</em> in <d-math>U</d-math>—removing the neighbors of <d-math>v</d-math> at each step guarantees that the coloring produced by the algorithm is proper, but the number of independent sets found by algorithm is not necessarily minimal.</p>
+
+    <p>Nonetheless, this algorithm exhibits better worst-case performance than its competitors. For the first stage of the algorithm, when there are at least <d-math>|V| \ / \log_k(|V|)</d-math> vertices left in <d-math>W</d-math>, each color is assigned to <d-math>O(\log_k |V|)</d-math> vertices—for each iteration, the degree of <d-math>v</d-math> is bounded such that step 2 cannot remove all vertices in <d-math>U</d-math> at once.</p>
 
     <div style="width: 100%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto" id="iset">
         <h4 style="text-align: center">Independent set interactive here</h4>
     </div>
 
-    <h3>Max-degree coloring</h3>
-    <div style="width: 100%; height: 450px; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
-        <h4 style="text-align: center">Max-degree coloring interactive here</h4>
-    </div>
-
-    <a class="marker" href="#section-4" id="section-4"><span>4</span></a>
+    <a class="marker" href="#section-3" id="section-3"><span>3</span></a>
     <h2>Wigderson's approximations</h2>
     <p>In a 1983 paper, Avi Wigderson introduced an algorithm for coloring 3-colorable graphs with at most <d-math>O(\sqrt{n})</d-math> colors; this algorithm can be extended to produce <d-math>k</d-math>-colorings with <d-math>O(n (\log \log n)^2 (\log n)^{-2})</d-math> colors.<d-cite key="wigderson"></d-cite> Though there are now more advanced and more performant graph coloring algorithms, Wigderson's collection of algorithms are an instructive example of how coloring heuristics can be improved to achieve better performance guarantees with little added complexity.</p>
 
 
     <h3>3-colorable graphs</h3>
-    <p>It is easy to achieve a reasonable coloring of a 3-colorable graph with low maximum degree. For instance, if <d-math>\Delta(G) \in O(\sqrt{n})</d-math>, there is a <d-math>O(\sqrt{n})</d-math>-coloring of <d-math>G</d-math>. This follows from the more general result that every graph admits a <d-math>\Delta(G) + 1</d-math>-coloring; simple polynomial-time algorithms exist to find such colorings. However, this bound is not always helpful. In the counterexample for Brélaz's algorithm shown above, most nodes have degree <d-math>O(n)</d-math>, but the graph is still 3-colorable.</p>
+    <p>It is easy to achieve a reasonable coloring of a 3-colorable graph with low maximum degree. For instance, if <d-math>\Delta(G) \in O(\sqrt{n})</d-math>, there is a <d-math>O(\sqrt{n})</d-math>-coloring of <d-math>G</d-math>. This follows from the more general result that every graph admits a <d-math>\Delta(G) + 1</d-math>-coloring; simple polynomial-time algorithms exist to find such colorings. However, this bound is not always helpful. In the counterexample for Brélaz's algorithm shown above, most vertices have degree <d-math>O(n)</d-math>, but the graph is still 3-colorable.</p>
 
     <p>For graphs with at least <d-math>\lceil \sqrt{n} \rceil</d-math> maximum degree, Wigderson suggests the following algorithm.</p>
     <div style="width: 85%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
-        <h4>Algorithm A (3-coloring with high maximum degree).</h4>
+        <h4>Algorithm A (3-coloring with high maximum degree)</h4>
         <p><strong>Input:</strong> a 3-colorable graph <d-math>G = (V, E)</d-math>.</p>
         <p><strong>Output:</strong> a coloring of <d-math>G</d-math> with at most <d-math>3 \lceil \sqrt{n} \rceil</d-math> colors.</p>
         <p><strong>Initialization:</strong> <d-math>i \leftarrow 1, n \leftarrow |V|</d-math></p>
@@ -193,32 +221,73 @@ d-figure > figure {
             <li>2-color <d-math>H</d-math> with colors <d-math>i, i + 1</d-math>.</li>
             <li>Color <d-math>v</d-math> with color <d-math>i + 2</d-math>.</li>
             <li>Let <d-math>i \leftarrow i + 2</d-math>.</li>
+            <li>Delete <d-math>v</d-math> and its neighbors from <d-math>G</d-math>.</li>
         </ol>
         <p>Color any remaining vertices in <d-math>G</d-math> with colors <d-math>i, i+1, …</d-math> using the maximum-degree algorithm.</p>
     </div>
 
-    <p><strong>Proof of correctness (sketch).</strong> Why can <d-math>H</d-math> be 2-colored at each step? For a 3-colorable graph, the subgraph induced by the neighborhood of any vertex (but not including that vertex) is 2-colorable. Each iteration of the loop uses 2-new colors and colors at least <d-math>\lceil \sqrt{n} + 1 \rceil</d-math> vertices, so at most <d-math>2 \lceil \sqrt{n} \rceil</d-math> colors are used in the loop. Once the graph has a maximum degree of less than <d-math>\lceil \sqrt{n} \rceil</d-math>, it is clearly <d-math>\lceil \sqrt{n} \rceil</d-math>-colorable. So Algorithm A produces a proper coloring using at most <d-math>3 \lceil \sqrt{n} \rceil</d-math> colors.</p>
-
-    <p><strong>Runtime analysis.</strong> TODO</p>
-
-    <p>It took nearly ten years after its publication for a 3-coloring algorithm beating the "<d-math>O(n^{\frac{1}{2} - o(1)})</d-math> barrier" to be developed.<d-cite key="blum"></d-cite> Arvim Blum's 3-coloring algorithm (1991), the first to break this barrier, uses <d-math>O(n^\frac{3}{8} \text{polylog}(n))</d-math> colors and is considerably more complicated. Berger and Rompel (1990) offer a minor improvement to Wigderson's algorithm that uses <d-math>O(\sqrt{n}/\sqrt{\log n})</d-math> colors.<d-cite key="berger"></d-cite></p>
+    <p><strong>The maximum-degree algorithm.</strong> A graph <d-math>G</d-math> can be <d-math>\Delta(G)+1</d-math>-colored in the following way: for each vertex <d-math>v</d-math>, recursively remove <d-math>v</d-math> from the graph, color <d-math>G - \{v\}</d-math>, and reinsert <d-math>v</d-math>. In the worst case, each neighbor of some vertex <d-math>v_{\text{max}}</d-math> with degree <d-math>\Delta(G)</d-math> uses a different color. Then <d-math>v_{\text{max}}</d-math> must have a different color than any of its neighbors, so <d-math>\Delta(G) + 1</d-math> colors are used in total.<d-cite key="aloupis"></d-cite></p>
 
 
-    <div style="width: 100%; height: 450px; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
+    <p><strong>Proof of correctness (sketch).</strong> Why can <d-math>H</d-math> be 2-colored at each step? For a 3-colorable graph, the subgraph induced by the neighborhood of any vertex (but not including that vertex) is 2-colorable. Each iteration of the loop uses two new colors and colors at least <d-math>\lceil \sqrt{n} \rceil + 1</d-math> vertices, so at most <d-math>2 \lceil \sqrt{n} \rceil</d-math> colors are used in the loop. Once the graph has a maximum degree of less than <d-math>\lceil \sqrt{n} \rceil</d-math>, it is clearly <d-math>\lceil \sqrt{n} \rceil</d-math>-colorable. So Algorithm A produces a proper coloring using at most <d-math>3 \lceil \sqrt{n} \rceil</d-math> colors.</p>
+
+    <p>It took nearly ten years after its publication for a 3-coloring algorithm beating the "<d-math>O(n^{\frac{1}{2} - o(1)})</d-math> barrier" to be developed.<d-cite key="blum"></d-cite> Berger and Rompel (1990) offer a minor improvement to Wigderson's algorithm that uses <d-math>O(\sqrt{n}/\sqrt{\log n})</d-math> colors.<d-cite key="berger"></d-cite> Arvim Blum's 3-coloring algorithm (1991), the first to break the barrier, uses <d-math>O(n^\frac{3}{8} \text{polylog}(n))</d-math> colors and is considerably more complicated. Blum later published an improved algorithm that uses <d-math>O(n^\frac{3}{14} \text{polylog}(n))</d-math> colors.<d-cite key="blum-improved"></d-cite></p>
+
+    <div id="wigderson3" style="width: 100%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
         <h4 style="text-align: center">3-coloring interactive here</h4>
     </div>
 
     <h3><d-math>k</d-math>-coloring</h3>
-    <p>Just as Wigderson's algorithm for 3-colorable graphs lifts a polynomial-time 2-coloring algorithm, we can create an approximate algorithm for <d-math>k</d-math>-colorable graphs 
+    <p>Just as Wigderson's algorithm for 3-colorable graphs lifts a polynomial-time 2-coloring algorithm, we can create an approximate algorithm for <d-math>k</d-math>-colorable graphs that lifts the core idea  of Wigderson's algorithm for 3-colorable graphs.<d-footnote>This approach is not specific to Wigderson's algorithms. Similar techniques can be used to achieve loose bounds for other algorithms—for instance, see section 7.3 of <d-cite key="karger"></d-cite>.</d-footnote></p>
+
+
+    <div style="width: 93%; border: 1px solid #ccc; padding: 2.2rem; margin: 1.5rem auto">
+        <h4>Algorithm B (<d-math style="text-transform: lowercase">k</d-math>-coloring)</h4>
+        <p><strong>Input:</strong> a <d-math>k</d-math>-colorable graph <d-math>G</d-math> and a starting color <d-math>i</d-math>.</p>
+        <p><strong>Output:</strong> a coloring of <d-math>G</d-math> with at most <d-math>2k \lceil n^{1-1/(k-1)} \rceil</d-math> colors.</p>
+        <p><strong>Initialization:</strong> <d-math>n \leftarrow |V|</d-math></p>
+        <p><strong>Base cases: </strong>if <d-math>k=2</d-math>, 2-color <d-math>G</d-math>. If <d-math>k \geq \log n</d-math>, assign each vertex its own color.</p>
+        <hr style="margin: 1.5rem 0">
+        <p><strong>function</strong> <d-math>B(k, G, i)</d-math>:</p>
+        <div style="margin-left: 1rem">
+            <h4 style="font-size: 12px">Recursive stage</h4>
+            <p><strong>while</strong> <d-math>\Delta(G) \geq \lceil n^{1-1/(k-1)} \rceil</d-math>:</p>
+            <ol style="margin-left: 1rem">
+                <li>Choose <d-math>v \in G</d-math> with maximum degree.</li>
+                <li>Let <d-math>H</d-math> be the subgraph of <d-math>G</d-math> induced by the neighbors of <d-math>v</d-math>.</li>
+                <li>Color <d-math>H</d-math> recursively: call <d-math>B(k-1, H, i)</d-math>. Let <d-math>j</d-math> be the number of new colors.</li>
+                <li>Color <d-math>v</d-math> with <d-math>i + j</d-math>. Let <d-math>i \leftarrow i + j </d-math>.</li>
+                <li>Delete <d-math>v</d-math> and its neighbors from <d-math>G</d-math>.
+            </ol>
+            <h4 style="font-size: 12px; margin-top: 1.5rem">Brute-force stage</h4>
+            <p>Color <d-math>G</d-math> with at most <d-math>\lceil n^{1-1/(k-1)} \rceil</d-math> colors.</p>
+        </div>
+    </div>
+
+    <p>The details of showing that the performance guarantee is achieved are complicated and involve a clever application of <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jensen's inequality</a>, but the fundamental insight is that we can use an algorithm for <d-math>k</d-math>-colorable graphs to color <d-math>k+1</d-math>-colorable graphs. Specifically, if <d-math>G</d-math> is <d-math>k+1</d-math>-colorable, then the subgraph induced by the neighbors of some <d-math>v \in G</d-math> must be <d-math>k</d-math>-colorable—by removing edges to <d-math>v</d-math>, an extra color is made available at each of its neighbors. This subgraph can be colored with the available <d-math>k</d-math>-coloring algorithm and <d-math>v</d-math> can be colored with the <d-math>k+1</d-math>-th color if necessary, yielding a coloring algorithm for <d-math>k+1</d-math>-colorable graphs.</p>
+
+    <p>This algorithm only beats the greedy independent set algorithm for graphs of low degree, but the two algorithms can be trivially combined to yield an algorithm that colors a graph with <d-math>O(n (\log \log n)^2 \ / (\log n)^2)</d-math> colors. This is an improvement over the <d-math>O(n \ / \log n)</d-math> performance guarantee achieved by the greedy independent set algorithm alone. Halldórsson slightly improved this algorithm, yielding a <d-math>O(n (\log \log n)^2 \ / (\log n)^3)</d-math> performance guarantee.<d-cite key="halldorsson"></d-cite></p>
+
+    <h3>Inapproximability</h3>
+    <p>Garey and Johnson showed in 1976 that no polynomial-time vertex coloring algorithm exists with an approximation factor beter than 2.<d-cite key="garey"></d-cite> This was later improved to a much stronger result: unless <strong>NP</strong> = <strong><a href="https://en.wikipedia.org/wiki/ZPP_(complexity)">ZPP</a></strong>, Wigderson's algorithm for <d-math>k</d-math>-coloring is close to optimal, polylogarithmic improvements notwithstanding. Feige and Kilian showed that the chromatic number of a graph cannot be approximated within a factor of <d-math>n^{1-\epsilon}</d-math> for any <d-math>\epsilon \gt 0</d-math>.<d-cite key="feige,khot"></d-cite> Thus, minimal graph coloring is a particularly thorny combinatorial problem—it is not just difficult to solve but difficult to even roughly approximate in polynomial time. In contrast, many other famous <strong>NP</strong>-complete problems, such as the <a href="https://en.wikipedia.org/wiki/Knapsack_problem">0/1 knapsack problem</a> and the <a href="https://en.wikipedia.org/wiki/Subset_sum_problem">subset sum problem</a>, have tight approximations.<d-cite key="ibarra"></d-cite></p>
+
+    <a class="marker" href="#section-4" id="section-4"><span>4</span></a>
+    <h2>Other algorithms</h2>
+    <h3>Metaheuristics</h3>
+    <p><a href="https://en.wikipedia.org/wiki/Local_search_(optimization)">Local search</a>, <a href="https://en.wikipedia.org/wiki/Simulated_annealing">simulated annealing</a>, <a href="https://en.wikipedia.org/wiki/Tabu_search">tabu search</a>, and <a href="https://en.wikipedia.org/wiki/Evolutionary_algorithm">evolutionary algorithms</a> are popular techniques for heuristically solving a broad range of combinatorial optimization problems. All of these approaches use an <em>objective function</em> and a notion of a <em>solution neighborhood</em> to guide the search process. Defining a useful objective function and a way of moving between solutions is nontrivial; some definitions allow for improper coloring in intermediate steps and use an objective function that encourages a proper coloring. Johnson et al. considered three different simulated annealing formulations of the vertex and found that, while simulated annealing often performs better than simpler heuristics such as DSatur, there is not a universally superior simulated annealing formulation.<d-cite key="johnson-annealing"></d-cite> Tabu search, an enhanced version of local search, also performs well in practice.<d-cite key="hertz"></d-cite></p>
+
+    <p>Evolutionary algorithms, which are loosely inspired by biological evolution, maintain a population of solution candidates that is continually improved through <em>mutation</em> events (analogous to random DNA mutation) and <em>crossover</em> events (analogous to mating). Defining the crossover step is again nontrivial—vertex colorings are fragile, and the combination of two proper colorings might yield an improper coloring. Carefully tailored evolutionary approaches, particularly when combined with local search, are competitive in practice.<d-cite key="galinier"></d-cite></p>
+
+    <h3>Semidefinite programming</h3>
+    <p>Karger et al. give a <em>semidefinite programming</em> formulation for 3-coloring and <d-math>k</d-math>-coloring problem. <a href="https://en.wikipedia.org/wiki/Semidefinite_programming">Semidefinite programming</a> is a generalization of <a href="https://en.wikipedia.org/wiki/Linear_programming">linear programming</a>; semidefinite programs can be (approximately) solved in polynomial time. Relaxing an <strong>NP</strong>-hard problem so that it can be expressed as a linear program and then rounding the solution appropriately is a popular approximation technique; Karger's formulation employs a generalization of this method to produce a <d-math>O(n^{\frac{1}{4}} \log^{\frac{1}{2}} n)</d-math>-coloring of a 3-colorable graph. Karger uses the notion of a <em>vector <d-math>k</d-math>-coloring</em>, which is a relaxed, continuous version of the discrete coloring problem. <d-cite key="karger"></d-cite> Vector coloring is loosely related to <em>fractional coloring</em>, another relaxation of the coloring problem.<d-cite key="chang"></d-cite></p>
+
+    <h3><d-math>k</d-math>-satisfiability reduction</h3>
+    <p>For many small instances, it is possible to solve vertex coloring problems exactly despite the hardness of the general problem. One exact technique involves converting a given coloring problem to a <em>Boolean satisfiability</em> (SAT) problem. SAT problems are <strong>NP</strong>-complete, but there are many industrial SAT solvers that can handle problem instances with hundreds of thousands of variables.<d-cite key="ohrimenko"></d-cite></p>
+    <p>Converting the <d-math>k</d-math>-satisfiability problem to the <d-math>k</d-math>-coloring problem—that is, showing that any algorithm that can produce a <d-math>k</d-math>-coloring problem in polynomial time could also efficiently solve SAT problems—is a common way to show that the coloring problem is <strong>NP</strong>-complete.<d-cite key="sipser"></d-cite> However, we can also express coloring problems as Boolean satisfiability problems.<d-cite key="tsiatas"></d-cite> This approach works well for many graphs with hundreds of vertices and thousands of edges.<d-cite key="vangelder"></d-cite></p>
 
     <a class="marker" href="#section-5" id="section-5"><span>5</span></a>
-    <h2>Other algorithms</h2>
-    <h3>Blum's approximation</h3>
-    <h3>Semidefinite programming</h3>
-    <h3><d-math>k</d-math>-satisfiability reduction</h3>
-
-    <a class="marker" href="#section-6" id="section-6"><span>6</span></a>
     <h2>Conclusion</h2>
+    <p>Determining the chromatic number of a graph is very hard—the best known algorithms perform only slightly better than the simplest heuristics. Nonetheless, there is a wide range of efficient approaches to graph coloring that often produce good colorings in practice.</p>
   </d-article>
 
   <d-appendix>
